@@ -31,8 +31,8 @@ class TestRunner:
             passed = test.run()
         out = f.getvalue()
 
-        # Queue result
-        self.queue.put(passed)
+        # Queue result and test number
+        self.queue.put((index, passed))
 
         # Print result
         with self.print_condn:
@@ -45,9 +45,15 @@ class TestRunner:
 
 
 class TestSuite:
-    def __init__(self, tests=[], multiprocess=True):
+    def __init__(self, tests=[], multiprocess=True, ml=None):
         """
-        A collection of tests to be run together. Supports multiprocessing.
+        A collection of tests to be run together. Supports multiprocessing and
+        ML integration.
+
+        ML Integration:
+            ml should be a function which accepts a list of 1s and 0s. That list
+            will signify the tests that the program passes (1) and fails (0) in
+            the correct order.
         """
         # Initialize the tests
         self.tests = []
@@ -55,6 +61,7 @@ class TestSuite:
             self.add_test(test)
 
         self.multiprocess = multiprocess
+        self.ml = ml
 
 
     def add_test(self, test):
@@ -70,8 +77,7 @@ class TestSuite:
         self.tests.append(test)
 
 
-    @staticmethod
-    def _close_suite(num_tests, num_passed):
+    def _close_suite(self, num_tests, num_passed):
         status = 'success' if num_tests == num_passed else 'warning'
 
         print()
@@ -79,6 +85,11 @@ class TestSuite:
             f"{num_passed} / {num_tests} tests passed.",
             status
         ))
+
+        if self.ml:
+            # Hand the test information to the ML model
+            print()
+            self.ml(self.pass_list)
 
 
     def _run_mp(self):
@@ -101,12 +112,14 @@ class TestSuite:
                 enumerate(self.tests)
             )
 
-        # Calculate the number that passed
+        # Calculate the number that passed and build a list for ML
         num_passed = 0
+        self.pass_list = [0] * len(self.tests)
         while not passed_q.empty():
-            passed = passed_q.get()
+            index, passed = passed_q.get()
             if passed:
                 num_passed += 1
+                self.pass_list[index] = 1
 
         self._close_suite(len(self.tests), num_passed)
 
@@ -116,11 +129,15 @@ class TestSuite:
         Runs all of the tests in order.
         """
         num_passed, num_tests = 0, len(self.tests)
+        self.pass_list = []
 
         for test in self.tests:
             if test.run():
                 # Test passed
                 num_passed += 1
+                self.pass_list.append(1)
+            else:
+                self.pass_list.append(0)
 
         self._close_suite(num_tests, num_passed)
 
