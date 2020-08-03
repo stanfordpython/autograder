@@ -14,6 +14,8 @@ class TestResponse(BaseTestResponse):
         if self.stderr and not self.warning:
             self.warning = self.stderr
 
+        self.has_output_diff = False
+
 
     def __eq__(self, other):
         """
@@ -82,6 +84,8 @@ class TestResponse(BaseTestResponse):
                 fromfile=self_name, 
                 tofile=other_name
             )).strip()
+
+            self.has_output_diff = True # Michael's thingy
 
             return (f"{StatusMessage('Difference in printed output:', 'info')}"
                     f"\n"

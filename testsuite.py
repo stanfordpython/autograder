@@ -1,6 +1,7 @@
 import contextlib
 import io
 import multiprocessing as mp
+import sys
 from autograder.tests import BaseTest
 from .printing import StatusMessage
 
@@ -44,7 +45,7 @@ class TestRunner:
 
 
 class TestSuite:
-    def __init__(self, tests=[], multiprocess=False):
+    def __init__(self, tests=[], multiprocess=True):
         """
         A collection of tests to be run together. Supports multiprocessing.
         """
@@ -125,8 +126,18 @@ class TestSuite:
 
 
     def run(self):
-        if self.multiprocess:
+        # Progressive mode cannot run with multiprocessing.
+        is_progressive = '-p' in sys.argv or '--progressive' in sys.argv
+
+        if self.multiprocess and (not is_progressive):
             self._run_mp()
 
         else:
+            if self.multiprocess:
+                no_progressive = StatusMessage(
+                    ("Progressive mode is incompatible with multiprocessing. "
+                     "The autograder will run \nin a single process."),
+                    'warning'
+                )
+                print(no_progressive)
             self._run_normal()
