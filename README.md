@@ -21,7 +21,7 @@ The autograder module has numerous tests which inherit from each other in a line
 * `FileIOTest`: A `FileIOTest` is provided a `filename` and generates an `IOTest` from the contents of that file.
 
 ### The Test Suite
-`autograder.testsuite` contains a class called `TestSuite`. This class allows the user to add several tests to the autograder, run them concurrently, and tabulate the results. You can disable the concurrency by passing `multiprocess=False` to the constructor of the `TestSuite`. You can also hook into the test suite using a machine learning algorithm by passing in a function as the argument `ml`. After all tests have finished, `ml` will be called with a list of ones and zeros where the `i`th entry corresponds to the `i`th test (one indicates that the student passed the test and zero indicates that the student failed).
+`autograder.testsuite` contains a class called `TestSuite`. This class allows the user to add several tests to the autograder, run them concurrently, and tabulate the results. You can enable concurrency by passing `multiprocess=True` to the constructor of the `TestSuite`. You can also hook into the test suite using a machine learning algorithm by passing in a function as the argument `ml`. After all tests have finished, `ml` will be called with a list of ones and zeros where the `i`th entry corresponds to the `i`th test (one indicates that the student passed the test and zero indicates that the student failed).
 
 ## Advanced Features
 ### Module Overrides

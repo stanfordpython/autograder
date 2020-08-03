@@ -45,7 +45,7 @@ class TestRunner:
 
 
 class TestSuite:
-    def __init__(self, tests=[], multiprocess=True, ml=None):
+    def __init__(self, tests=[], multiprocess=False, ml=None):
         """
         A collection of tests to be run together. Supports multiprocessing and
         ML integration.
