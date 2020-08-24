@@ -1,6 +1,6 @@
-from distutils.core import setup
+import setuptools
 
-setup(
+setuptools.setup(
     name='autograder',
     packages=setuptools.find_packages(),
     version='0.2',
