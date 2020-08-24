@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name='autograder',
+    name='sp_autograder',
     packages=setuptools.find_packages(),
     version='0.2',
     license='MIT',
