@@ -1,6 +1,9 @@
 # CS 41 Autograder
 
-![Issues](https://img.shields.io/github/issues/stanfordpython/autograder) ![MIT License](https://img.shields.io/github/license/stanfordpython/autograder)
+![Language](https://img.shields.io/github/languages/top/stanfordpython/autograder)
+![Issues](https://img.shields.io/github/issues/stanfordpython/autograder)
+![PyPi Version](https://img.shields.io/pypi/v/sp-autograder)
+![MIT License](https://img.shields.io/github/license/stanfordpython/autograder)
 
 CS 41: Hap.py Code is a course at Stanford about the Python programming language. This autograder, implemented entirely in Python allows the user to run student code, run solution code, and compare the output of the two. The autograder allows the user to implement several tests which can be executed concurrently and allows the user to hook into the module and provide logic to post-process the results of the tests.
 
