@@ -1,5 +1,4 @@
 import sys
-import re
 import io
 
 class StatusMessage:
@@ -48,17 +47,17 @@ class StatusMessage:
         plat = sys.platform
         supported_platform = plat != 'Pocket PC' and (
             plat != 'win32' or 'ANSICON' in os.environ)
-     
+
         # isatty is not always implemented, #6223.
         is_a_tty = (hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()) \
                    or isinstance(sys.stdout, io.IOBase)
-     
+
         if not supported_platform or not is_a_tty:
             return False
-     
+
         return True
 
-    
+
     def _setup_color_support(self):
         """
         Sets up the class based on whether the terminal suppports
@@ -76,7 +75,7 @@ class StatusMessage:
         else:
             self._use_termcolor = True
 
-   
+
     def _get_color(self, message, status):
         """
         Converts the status to a color hex
@@ -134,8 +133,8 @@ class HeaderMessage(StatusMessage):
         horiz_lines = max(len(message) + 10, 80)
 
         # new_message = [
-        #     '┌' + '─' * horiz_lines + '┐', 
-        #     '│ {:^{spacing}} │'.format(message, spacing=horiz_lines-2), 
+        #     '┌' + '─' * horiz_lines + '┐',
+        #     '│ {:^{spacing}} │'.format(message, spacing=horiz_lines-2),
         #     '└' + '─' * horiz_lines + '┘',
         # ]
         # new_message = '\n'.join(new_message)
@@ -156,15 +155,15 @@ class SuperHeaderMessage(StatusMessage):
         horiz_lines = max(len(message) + 10, 78)
 
         # new_message = [
-        #     '╔' + '═' * horiz_lines + '╗', 
-        #     '║ {:^{spacing}} ║'.format(message, spacing=horiz_lines-2), 
+        #     '╔' + '═' * horiz_lines + '╗',
+        #     '║ {:^{spacing}} ║'.format(message, spacing=horiz_lines-2),
         #     '╚' + '═' * horiz_lines + '╝',
         # ]
         # new_message = '\n'.join(new_message)
 
         new_message = [
-            '┌' + '─' * horiz_lines + '┐', 
-            '│ {:^{spacing}} │'.format(message, spacing=horiz_lines-2), 
+            '┌' + '─' * horiz_lines + '┐',
+            '│ {:^{spacing}} │'.format(message, spacing=horiz_lines-2),
             '└' + '─' * horiz_lines + '┘',
         ]
         new_message = '\n'.join(new_message)
