@@ -18,7 +18,7 @@ class BaseTest:
 
         Arguments
         ---------
-        start_msg (str or None) -- The message to print at the beginning of the 
+        start_msg (str or None) -- The message to print at the beginning of the
             test.
         setup_fn (function () -> None) -- The function that will be run before
             the test executes.
@@ -70,7 +70,7 @@ class BaseTest:
         print(fe_content)
 
         # 4. Ask up, down, or both
-        msg = ("Type PRIOR to show all prior output, SUBSEQ for subsequent" 
+        msg = ("Type PRIOR to show all prior output, SUBSEQ for subsequent"
                " output, or BOTH for a\nfull diff: ")
         resp = input(msg).upper()
 
@@ -95,7 +95,7 @@ class BaseTest:
             to_print = self.__handle_progressive_diff(diff)
         else:
             to_print = diff
-        
+
         print(to_print)
 
 
@@ -131,11 +131,11 @@ class BaseTest:
         self._setup()
 
         self.solution_response = TestResponse(
-            self.solution_obj, None, None, False, 'solution'
+            self.solution_obj, None, None, 'solution', False
         )
 
         self.student_response = TestResponse(
-            self.student_obj, None, None, False, 'student'
+            self.student_obj, None, None, 'student', False
         )
 
         return self._process_responses()
