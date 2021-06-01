@@ -3,7 +3,7 @@ import setuptools
 setuptools.setup(
     name='sp_autograder',
     packages=setuptools.find_packages(),
-    version='0.2.1',
+    version='0.2.2',
     license='MIT',
     description='A Python-backed customizable autograder.',
     long_description=open('README.md').read(),
