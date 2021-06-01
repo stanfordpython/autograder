@@ -1,4 +1,4 @@
-__version__ = '0.2'
+__version__ = '0.2.1'
 __author__ = 'Parth Sarin'
 __license__ = 'MIT'
 
@@ -33,7 +33,9 @@ class Autograder:
         has_style_tests (bool) -- Whether to run PEP8 style checking on the
             module.
         """
-        self.module_name = module_name.rstrip('.py')
+        self.module_name = module_name
+        if module_name.endswith('.py'):
+            self.module_name = self.module_name[:-3]
         self.module_overrides = module_overrides
 
         self.has_compile_check = has_compile_check
@@ -41,7 +43,7 @@ class Autograder:
         self.has_style_tests = has_style_tests
 
 
-    def run(self):    
+    def run(self):
         """
         Run the autograder.
         """
